@@ -1,0 +1,56 @@
+version: '2'
+
+networks:
+  main:
+
+services:
+  genesis:
+    image: jmccloskey/multichain-genesis
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - main
+    ports:
+      - "8570"
+      - "8571"
+    command:
+      multichaind sample
+      -printtoconsole
+      -server
+      -rest
+      -port=8570
+      -rpcport=8571
+      -rpcallowip=0.0.0.0/0
+      -rpcuser=user
+      -rpcpassword=local-password
+      -autosubscribe=assets,streams
+      -debug=mchn
+      -debug=mcapi
+      -debug=mccoin
+      -debug=mcatxo
+      -debug=mcminer
+      -debug=mcblock
+
+  generator:
+    image: node:8.9.4-alpine
+    volumes:
+      - ./generator/:/app
+    working_dir: /app
+    networks:
+      - main
+    ports:
+      - "10017:10010"
+      - "5867:5858"
+    depends_on:
+      - genesis
+    environment:
+      NODE_ENV: development
+      PORT: "10010"
+      MULTICHAIN_HOST: genesis
+      ASSETS_TO_CREATE: 5000
+    command:
+      /bin/ash -c
+        "yarn install && node app.js"
+
+

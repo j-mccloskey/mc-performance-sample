@@ -1,0 +1,19 @@
+{
+  "name": "generator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generator",
+  "keywords": [],
+  "author": "jmccloskey",
+  "license": "Unlicense",
+  "main": "app.js",
+  "dependencies": {
+    "performance-now": "^2.1.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "uuid": "^3.0.1"
+  },
+  "scripts": {
+    "start": "nodemon -L --inspect=0.0.0.0:5858 app.js"
+  }
+}
