@@ -58,6 +58,8 @@ genesis_1    | mcapi: API request successful: combineunspent
 
 Increasing the autocombinemaxinputs to 500 helped performance and keep the number of utxocount down initially but it started to experience the same script is too big error as above
 
+## Logs and other usage
+
 Chain logs can be tailed:
 ```bash
 docker-compose logs -f genesis
